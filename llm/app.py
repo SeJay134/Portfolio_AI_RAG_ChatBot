@@ -1,5 +1,24 @@
 # llm/app.py
 
+import os
+from pathlib import Path as FilePath
+from dotenv import load_dotenv
+load_dotenv()
+print("cwd:", os.getcwd())
+print("FRONTEND_URLS:", os.getenv("FRONTEND_URLS"))
+
+# ===========================================
+BASE_DIR = FilePath(__file__).resolve().parent.parent
+ENV_PATH = BASE_DIR / ".env"
+
+loaded = load_dotenv(ENV_PATH)
+
+print("ENV path:", ENV_PATH)
+print("ENV exists:", ENV_PATH.is_file())
+print("ENV loaded:", loaded)
+print("FRONTEND_URLS:", repr(os.getenv("FRONTEND_URLS")))
+# ===========================================
+
 from flask import Flask, request, jsonify
 import ollama
 from flask_cors import CORS
@@ -7,12 +26,9 @@ from llm.rag_pipeline import run_rag
 # from llm.router import needs_rag
 from llm.router import Router
 from llm.retriever import Retriever
-import os
 
-from dotenv import load_dotenv
-load_dotenv()
-print("cwd:", os.getcwd())
-print("FRONTEND_URLS:", os.getenv("FRONTEND_URLS"))
+
+
 
 from flask_limiter import Limiter
 from flask_limiter.util import get_remote_address
@@ -51,7 +67,7 @@ logging.info(f'device: {device}')
 # -----------------------------------------------
 app = Flask(__name__, template_folder="../", static_folder="../")
 app.config["MAX_CONTENT_LENGTH"] = 1024 * 16   # 16 KB
-# CORS(app, origins=["https://portfolioairagchatbotfaiss.vercel.app/", "https://dangle-scarecrow-baguette.ngrok-free.dev"])
+# CORS(app, origins=["https://portfolioairagchatbotfaiss.vercel.app", "https://dangle-scarecrow-baguette.ngrok-free.dev"])
 urls = [url.strip() for url in os.getenv('FRONTEND_URLS', '').split(",") if url.strip()]
 print('urls:', urls)
 CORS(app, origins=urls, methods=['GET', 'POST'], allow_headers=['Content-Type'])
