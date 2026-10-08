@@ -51,10 +51,10 @@ logging.info(f'device: {device}')
 # -----------------------------------------------
 app = Flask(__name__, template_folder="../", static_folder="../")
 app.config["MAX_CONTENT_LENGTH"] = 1024 * 16   # 16 KB
-CORS(app, origins=["https://portfolioairagchatbotfaiss.vercel.app/", "https://dangle-scarecrow-baguette.ngrok-free.dev"])
+# CORS(app, origins=["https://portfolioairagchatbotfaiss.vercel.app/", "https://dangle-scarecrow-baguette.ngrok-free.dev"])
 urls = [url.strip() for url in os.getenv('FRONTEND_URLS', '').split(",") if url.strip()]
 print('urls:', urls)
-#CORS(app, origins=urls, methods=['GET', 'POST'], allow_headers=['Content-Type', 'Access-Control-Allow-Origin'])
+CORS(app, origins=urls, methods=['GET', 'POST'], allow_headers=['Content-Type', 'Access-Control-Allow-Origin'])
 logging.info(f"cwd: {os.getcwd()}")
 logging.info(f"FRONTEND_URLS: {os.getenv('FRONTEND_URLS')}")
 # -----------------------------------------------
