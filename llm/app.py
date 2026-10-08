@@ -1,23 +1,28 @@
 # llm/app.py
 
+# Environment configuration
+# -----------------------------------------------
 import os
 from pathlib import Path as FilePath
-from dotenv import load_dotenv
-load_dotenv()
-print("cwd:", os.getcwd())
-print("FRONTEND_URLS:", os.getenv("FRONTEND_URLS"))
+from dotenv import load_dotenv, dotenv_values
 
-# ===========================================
 BASE_DIR = FilePath(__file__).resolve().parent.parent
 ENV_PATH = BASE_DIR / ".env"
 
-loaded = load_dotenv(ENV_PATH)
-
+# Verify environment file
+print("CWD:", os.getcwd())
 print("ENV path:", ENV_PATH)
 print("ENV exists:", ENV_PATH.is_file())
-print("ENV loaded:", loaded)
-print("FRONTEND_URLS:", repr(os.getenv("FRONTEND_URLS")))
-# ===========================================
+
+# Read values directly from the file for diagnostics
+env_values = dotenv_values(ENV_PATH)
+print("FILE FRONTEND_URLS:", repr(env_values.get("FRONTEND_URLS")))
+
+# Load .env (local development)
+load_dotenv(dotenv_path=ENV_PATH, override=True)
+
+print("ACTIVE FRONTEND_URLS:", repr(os.getenv("FRONTEND_URLS")))
+# -----------------------------------------------
 
 from flask import Flask, request, jsonify
 import ollama
