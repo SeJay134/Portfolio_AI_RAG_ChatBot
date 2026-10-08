@@ -32,9 +32,6 @@ from llm.rag_pipeline import run_rag
 from llm.router import Router
 from llm.retriever import Retriever
 
-
-
-
 from flask_limiter import Limiter
 from flask_limiter.util import get_remote_address
 
@@ -72,7 +69,7 @@ logging.info(f'device: {device}')
 # -----------------------------------------------
 app = Flask(__name__, template_folder="../", static_folder="../")
 app.config["MAX_CONTENT_LENGTH"] = 1024 * 16   # 16 KB
-# CORS(app, origins=["https://portfolioairagchatbotfaiss.vercel.app", "https://dangle-scarecrow-baguette.ngrok-free.dev"])
+
 urls = [url.strip() for url in os.getenv('FRONTEND_URLS', '').split(",") if url.strip()]
 print('urls:', urls)
 CORS(app, origins=urls, methods=['GET', 'POST'], allow_headers=['Content-Type'])
