@@ -196,7 +196,7 @@ def chat():
     return jsonify({"reply": reply})
     
 if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=5002)
+    app.run(host="0.0.0.0", port=5005)
 
 # Flask backend:
 # python -m llm.app
@@ -205,4 +205,4 @@ if __name__ == "__main__":
 # python -m http.server 5001
 
 # Public tunnel to Flask:
-# ngrok http 5002
+# ngrok http 5005
