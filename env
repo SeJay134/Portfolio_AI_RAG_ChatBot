@@ -1,0 +1,3 @@
+# .env
+
+FRONTEND_URLS=https://sejay.vercel.app,https://dangle-scarecrow-baguette.ngrok-free.dev,http://localhost:5001
